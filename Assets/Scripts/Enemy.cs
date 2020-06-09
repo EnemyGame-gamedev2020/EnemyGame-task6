@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,7 +17,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] float attackRadius = 2f;
     private Vector3 _ppos;
 
+    [SerializeField] Target escap_target;
+
     private HealthBarPlayer healthBar;
+    private bool isEscapeMode = false;
+    private bool isDie = false;
 
     private void Start()
     {
@@ -29,34 +34,38 @@ public class Enemy : MonoBehaviour
         _target = _player;
         _animator.SetBool("isStanding", false);
         _animator.SetBool("isWalking", true);
+        _animator.Play("walk");
         _navMeshAgent.SetDestination(_target.transform.position);
         healthBar = GetComponent<HealthBarPlayer>();
     }
 
     private void Update()
     {
-        _ppos = _player.transform.position;
-        if (!_navMeshAgent.hasPath)
+        if (!isDie)
         {
-            NextState -= Time.deltaTime;
-            if (NextState <= 0)
+            _ppos = _player.transform.position;
+            if (!_navMeshAgent.hasPath)
             {
-                Walk();
-                _navMeshAgent.SetDestination(_target.transform.position);
-                NextState = Random.Range(7f, 15f);
+                NextState -= Time.deltaTime;
+                if (NextState <= 0 && !isEscapeMode)
+                {
+                    Walk();
+                    _navMeshAgent.SetDestination(_target.transform.position);
+                    NextState = Random.Range(3f, 7f);
+                }
             }
-        }
 
 
-        float distance = Vector3.Distance(_ppos, transform.position);
-        if (distance <= lookRadius)
-        {
-            FacePlayer();
-        }
-        if (distance <= attackRadius && !_animator.GetCurrentAnimatorStateInfo(0).IsName("zombie attack"))
-        {
-            StartCoroutine(Attack());
-            Stand();
+            float distance = Vector3.Distance(_ppos, transform.position);
+            if (distance <= lookRadius)
+            {
+                FacePlayer();
+            }
+            if (distance <= attackRadius && !_animator.GetCurrentAnimatorStateInfo(0).IsName("zombie attack"))
+            {
+                StartCoroutine(Attack());
+                Stand();
+            }
         }
     }
 
@@ -78,6 +87,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Attack()
     {
+
         _animator.SetBool("isStanding", false);
         _animator.SetBool("isWalking", false);
         _animator.SetBool("isZombieAttack", true);
@@ -92,6 +102,29 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy damage");
         life_score -= 30;
         healthBar.TakeDamage(30);
+        if(life_score <= 0)
+        {
+            StartCoroutine(Die());
+        }
+        if(life_score < 40)
+        {
+            isEscapeMode = true;
+            Walk();
+            _navMeshAgent.SetDestination(escap_target.transform.position);
+        }
+    }
+
+    IEnumerator Die()
+    {
+        Debug.Log(this.name + " die");
+        isDie = true;
+        _animator.SetBool("isZombieAttack", false);
+        _animator.SetBool("isStanding", false);
+        _animator.SetBool("isWalking", false);
+        _animator.SetBool("isDie", true);
+        _animator.Play("die");
+        yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length + 3);
+        Destroy(this.gameObject);
     }
 
     private void FacePlayer()
