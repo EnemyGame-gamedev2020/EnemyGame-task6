@@ -42,6 +42,9 @@ To fight enemies use the space key.
 ### Enemy:
 - [Enemy](https://github.com/EnemyGame-gamedev2020/EnemyGame-task6/blob/master/Assets/Scripts/Enemy.cs) - Represents enemy situations in the game such as standing, walking, attacking and his damage status when injured by the player and his death.
 - [EnemyClaws](https://github.com/EnemyGame-gamedev2020/EnemyGame-task6/blob/master/Assets/Scripts/EnemyClaws.cs) - Represents the claws with which the enemy fights
+- [HealthBarPlayer](https://github.com/EnemyGame-gamedev2020/EnemyGame-task6/blob/master/Assets/Scripts/HealthBarPlayer.cs) - Represents the Health of the enemy in the game.
+
+Once the enemies feel danger (When the Health Bar drops to a certain number) they retreat to the dark to escape the player.
 
 
 ### Health Bar:
@@ -77,7 +80,7 @@ To fight enemies use the space key.
 ![image](https://user-images.githubusercontent.com/45036697/84188439-435cd980-aa9c-11ea-8281-953b7515c786.png)
 
 ### The player won:
-
+![image](https://user-images.githubusercontent.com/45036697/84189482-009c0100-aa9e-11ea-9b0a-af1e4e8a2d3e.png)
 
 
 
