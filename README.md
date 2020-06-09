@@ -66,3 +66,7 @@ To fight enemies use the space key.
 
 
 ## Images
+
+### Starting Position:
+![image](https://user-images.githubusercontent.com/45036697/84187780-37244c80-aa9b-11ea-83fc-bf562eda7349.png)
+
