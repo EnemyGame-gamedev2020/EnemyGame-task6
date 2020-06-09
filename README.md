@@ -70,3 +70,17 @@ To fight enemies use the space key.
 ### Starting Position:
 ![image](https://user-images.githubusercontent.com/45036697/84187780-37244c80-aa9b-11ea-83fc-bf562eda7349.png)
 
+### The player fights enemies:
+![image](https://user-images.githubusercontent.com/45036697/84188192-dba68e80-aa9b-11ea-98cb-9c3981c42ca1.png)
+
+### The player lost:
+![image](https://user-images.githubusercontent.com/45036697/84188439-435cd980-aa9c-11ea-8281-953b7515c786.png)
+
+### The player won:
+
+
+
+
+
+
+
